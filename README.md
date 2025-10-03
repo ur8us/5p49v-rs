@@ -1,3 +1,5 @@
+**Outdated. See https://github.com/ur8us/pll5p49v **
+
 A simple Renesas 5P49V clock generator driver.
 
 Tested with 5P49V5925, 5P49V6965.

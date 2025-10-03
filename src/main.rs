@@ -7,8 +7,6 @@ use embassy_time::Timer;
 use embassy_rp::gpio::{Level, Output};
 use embassy_rp::i2c::{Config, I2c, InterruptHandler};
 
-use embedded_hal_async::i2c::I2c as I2cTrait;
-
 use defmt_rtt as _;
 use panic_probe as _;
 
@@ -37,7 +35,7 @@ async fn write_config<I2C, E>(
     output4_fq_hz: u32,
 ) -> Result<(), E>
 where
-    I2C: I2cTrait<Error = E>,
+    I2C: embedded_hal_async::i2c::I2c<Error = E>,
 {
     // Calculate feedback divider, integer (upper 32 bits) and fractional (lower 32 bits)
     let feedback_divider = ((vco_fq_hz as u64) << 32) / (clock_fq_hz as u64);
@@ -227,7 +225,7 @@ where
 
 async fn calibrate_vco<I2C, E>(i2c: &mut I2C) -> Result<(), E>
 where
-    I2C: I2cTrait<Error = E>,
+    I2C: embedded_hal_async::i2c::I2c<Error = E>,
 {
     // Read 7th bit of the register 0x1C
     // write 0-1-0 to this bit
